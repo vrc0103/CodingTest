@@ -74,6 +74,6 @@ public class BJ1717 {
             return a;
         }
 
-        return parent[a] = getParent(parent[a]); // parent 배열을 갱신하고 반환
+        return parent[a] = getParent(parent[a]); // parent 배열을 갱신하고 반환해야 시간이 절약됨
     }
 }
