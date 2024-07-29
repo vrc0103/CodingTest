@@ -6,7 +6,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BJ1717 {
+public class BOJ1717 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;

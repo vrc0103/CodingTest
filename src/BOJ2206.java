@@ -8,7 +8,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BJ2206 {
+public class BOJ2206 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
 
