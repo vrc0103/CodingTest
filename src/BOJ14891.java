@@ -10,7 +10,7 @@ public class BOJ14891 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
 
-    static int[][] gears;
+    static int[] gears;
     static int res;
 
     public static void main(String[] args) throws IOException {
@@ -24,13 +24,13 @@ public class BOJ14891 {
     static void getGear() throws IOException {
         String input;
 
-        gears = new int[4][8];
+        gears = new int[4];
 
         for (int i = 0; i < 4; i++) {
             input = br.readLine();
 
             for (int j = 0; j < 8; j++) {
-                gears[i][j] = input.charAt(j) - '0';
+                gears[i] = (gears[i] << 1) + (input.charAt(j) - '0');
             }
         }
     }
@@ -38,7 +38,6 @@ public class BOJ14891 {
     static void getRes() throws IOException {
         int count = Integer.parseInt(br.readLine());
         int num, dir;
-        int tmp;
         int[] rot;
 
         for (int i = 0; i < count; i++) {
@@ -51,7 +50,7 @@ public class BOJ14891 {
 
             // 왼쪽 톱니 확인
             for (int j = num; j > 0; j--) {
-                if (gears[j][6] != gears[j - 1][2]) { // 맞닿은 극이 다른 경우
+                if (((gears[j] >> 1) & 1) != ((gears[j - 1] >> 5) & 1)) { // 맞닿은 극이 다른 경우
                     rot[j - 1] = rot[j] * -1;
                 } else {
                     break;
@@ -60,7 +59,7 @@ public class BOJ14891 {
 
             // 오른쪽 톱니 확인
             for (int j = num; j < 3; j++) {
-                if (gears[j][2] != gears[j + 1][6]) { // 맞닿은 극이 다른 경우
+                if (((gears[j] >> 5) & 1) != ((gears[j + 1] >> 1) & 1)) { // 맞닿은 극이 다른 경우
                     rot[j + 1] = rot[j] * -1;
                 } else {
                     break;
@@ -70,17 +69,9 @@ public class BOJ14891 {
             // 톱니 회전
             for (int j = 0; j < 4; j++) {
                 if (rot[j] == 1) { // 시계 방향
-                    tmp = gears[j][7];
-                    for (int k = 6; k >= 0; k--) {
-                        gears[j][k + 1] = gears[j][k];
-                    }
-                    gears[j][0] = tmp;
+                    gears[j] = (gears[j] + ((gears[j] & 1) << 8)) >> 1;
                 } else if (rot[j] == -1) { // 반시계 방향
-                    tmp = gears[j][0];
-                    for (int k = 1; k < 8; k++) {
-                        gears[j][k - 1] = gears[j][k];
-                    }
-                    gears[j][7] = tmp;
+                    gears[j] = ((gears[j] << 1) + (gears[j] >> 7)) & ~(1 << 8);
                 } else {
                     continue;
                 }
@@ -89,7 +80,7 @@ public class BOJ14891 {
 
         res = 0;
         for (int i = 0; i < 4; i++) {
-            res += gears[i][0] * Math.pow(2, i);
+            res += ((gears[i] >> 7) & 1) * Math.pow(2, i);
         }
     }
 }
