@@ -11,8 +11,8 @@ public class SWEA1251_Prim {
     static long res;
     static double tax;
     static boolean[] visited;
+    static long[][] cost;
     static PriorityQueue<Node> pq;
-    static ArrayList<Node>[] list;
 
     static class Node implements Comparable<Node> {
         int node;
@@ -46,12 +46,12 @@ public class SWEA1251_Prim {
     static void getIslands() throws IOException {
         int[] islandR;
         int[] islandC;
-        long cost;
+        long val;
 
         num = Integer.parseInt(br.readLine());
         islandR = new int[num];
         islandC = new int[num];
-        list = new ArrayList[num];
+        cost = new long[num][num];
 
         st = new StringTokenizer(br.readLine());
         for (int r = 0; r < num; r++) {
@@ -64,18 +64,16 @@ public class SWEA1251_Prim {
         }
 
         for (int i = 0; i < num; i++) {
-            list[i] = new ArrayList<>();
-
             // 각 노드의 간선 비용을 모두 확인해야 하므로 j도 0부터 시작
             for (int j = 0; j < num; j++) {
                 if (i == j) {
                     continue;
                 }
 
-                cost = (long) (Math.pow(islandR[i] - islandR[j], 2) + Math.pow(islandC[i] - islandC[j], 2));
+                val = (long) (Math.pow(islandR[i] - islandR[j], 2) + Math.pow(islandC[i] - islandC[j], 2));
 
                 // 각 노드별 코스트를 모두 저장
-                list[i].add(new Node(j, cost));
+                cost[i][j] = val;
             }
         }
 
@@ -84,7 +82,7 @@ public class SWEA1251_Prim {
 
     static void getPrim() {
         int count = 0;
-        Node now, next;
+        Node now;
 
         pq = new PriorityQueue<>();
         visited = new boolean[num];
@@ -100,12 +98,10 @@ public class SWEA1251_Prim {
                 continue;
             }
 
-            for (int i = 0; i < list[now.node].size(); i++) {
-                next = list[now.node].get(i);
-
+            for (int i = 0; i < num; i++) {
                 // 현재 노드와 연결된 노드 중 방문하지 않은 노드를 pq에 추가
-                if (!visited[next.node]) {
-                    pq.offer(next);
+                if (i != now.node && !visited[i]) {
+                    pq.offer(new Node(i, cost[now.node][i]));
                 }
             }
 
