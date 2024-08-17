@@ -10,8 +10,8 @@ public class SWEA1238 {
     static int len;
     static int start;
     static int res;
-    static ArrayList<Integer>[] contact;
     static boolean[] selected;
+    static boolean[][] contact;
 
     public static void main(String[] args) throws IOException {
         for (int tc = 1; tc <= testCase; tc++) {
@@ -28,7 +28,7 @@ public class SWEA1238 {
     static void getContact() throws IOException {
         int from, to;
 
-        contact = new ArrayList[101];
+        contact = new boolean[101][101];
 
         st = new StringTokenizer(br.readLine());
 
@@ -40,11 +40,7 @@ public class SWEA1238 {
             from = Integer.parseInt(st.nextToken());
             to = Integer.parseInt(st.nextToken());
 
-            if (contact[from] == null) {
-                contact[from] = new ArrayList<Integer>();
-            }
-
-            contact[from].add(to);
+            contact[from][to] = true;
         }
     }
 
@@ -74,10 +70,10 @@ public class SWEA1238 {
                     continue;
                 }
 
-                for (int next : contact[now]) {
-                    if (!selected[next]) {
-                        selected[next] = true;
-                        queue.add(next);
+                for (int j = 0; j < 101; j++) {
+                    if (contact[now][j] && !selected[j]) {
+                        selected[j] = true;
+                        queue.add(j);
                     }
                 }
             }
