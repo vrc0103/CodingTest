@@ -53,7 +53,7 @@ public class BOJ1406 {
             } else if (cmd.equals("B")) {
                 // 커서 왼쪽의 문자 삭제
                 // remove는 가장 최근 반환된 요소를 제거함
-                // -> previous로 커서를 이동시켜 반환된 값(커서 이동 전 커서의 앞에 있던 값)을 삭제함
+                // -> previous로 커서를 왼쪽으로 이동시켜 반환된 값(커서 이동 전 커서의 앞에 있던 값)을 삭제함
                 if (cursor.hasPrevious()) {
                     cursor.previous();
                     cursor.remove();
