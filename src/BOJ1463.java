@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class BOJ1463 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
