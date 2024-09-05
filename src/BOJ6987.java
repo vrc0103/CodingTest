@@ -18,6 +18,7 @@ public class BOJ6987 {
         System.out.println(sb.toString());
     }
 
+    // https://tussle.tistory.com/1027
     static void getScore() throws IOException {
         score = new int[6][3]; // 팀 별 승, 무, 패
 
