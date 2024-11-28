@@ -32,6 +32,8 @@ public class BOJ1138 {
         LinkedList<Integer> order = new LinkedList<>();
         int loc;
 
+        // 뒤에서부터(키 큰 사람부터) 탐색하며 해당 위치에 삽입
+        // -> 작은 사람이 동일한 위치로 삽입될 시 큰 사람이 뒤로 밀리며 키에 따른 순서 유지됨
         for (int i = num; i > 0; i--) {
             loc = count[i];
 
