@@ -18,7 +18,7 @@ public class SWEA1230 {
 
     static void getEnc() throws Exception {
         int len = Integer.parseInt(br.readLine().trim());
-        ArrayList<Integer> enc = new ArrayList<>();
+        LinkedList<Integer> enc = new LinkedList<>();
 
         st = new StringTokenizer(br.readLine().trim());
         for (int i = 0; i < len; i++) {
