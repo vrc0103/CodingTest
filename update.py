@@ -41,16 +41,7 @@ def main():
             if directory in ["백준", "프로그래머스"]:
                 content += "## 📚 {}\n".format(directory)
             else:
-                # directory에 해당하는 폴더의 경로를 구합니다.
-                directory_path = os.path.join(".", directory)
-                # 해당 폴더 내의 하위 폴더 목록을 구합니다.
-                # 예시에서는 'images' 폴더는 제외하도록 했습니다.
-                subfolders = [
-                    d for d in os.listdir(directory_path)
-                    if os.path.isdir(os.path.join(directory_path, d)) and d != 'images'
-                ]
-                # 하위 폴더 개수를 헤더에 추가합니다.
-                content += "### 🚀 {} ({}개)\n".format(directory, len(subfolders))
+                content += "### 🚀 {} \n".format(directory)
                 content += "| 문제번호 | 링크 |\n"
                 content += "| ----- | ----- |\n"
             directories.append(directory)
