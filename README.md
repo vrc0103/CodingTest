@@ -1,17 +1,12 @@
 # 
-# 백준 & 프로그래머스 문제 풀이 목록
-
-프로그래머스의 경우, 푼 문제 목록에 대한 마이그레이션이 필요합니다.
-
-### 🚀 SWEA 
-| 문제번호 | 링크 |
-| ----- | ----- |
-### 🚀 Unrated 
+# 백준 & 프로그래머스 & SWEA 문제 풀이 목록
+## 📚 SWEA
+### 🚀 Unrated
 | 문제번호 | 링크 |
 | ----- | ----- |
 |5653. ［모의 SW 역량테스트］ 줄기세포배양|[링크](./SWEA/Unrated/5653.%E2%80%85%EF%BC%BB%EB%AA%A8%EC%9D%98%E2%80%85SW%E2%80%85%EC%97%AD%EB%9F%89%ED%85%8C%EC%8A%A4%ED%8A%B8%EF%BC%BD%E2%80%85%EC%A4%84%EA%B8%B0%EC%84%B8%ED%8F%AC%EB%B0%B0%EC%96%91/%EF%BC%BB%EB%AA%A8%EC%9D%98%E2%80%85SW%E2%80%85%EC%97%AD%EB%9F%89%ED%85%8C%EC%8A%A4%ED%8A%B8%EF%BC%BD%E2%80%85%EC%A4%84%EA%B8%B0%EC%84%B8%ED%8F%AC%EB%B0%B0%EC%96%91.java)|
 ## 📚 백준
-### 🚀 Bronze 
+### 🚀 Bronze
 | 문제번호 | 링크 |
 | ----- | ----- |
 |1000. A＋B|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1000.%E2%80%85A%EF%BC%8BB/README.md)|
@@ -28,7 +23,7 @@
 |2810. 컵홀더|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2810.%E2%80%85%EC%BB%B5%ED%99%80%EB%8D%94/%EC%BB%B5%ED%99%80%EB%8D%94.java)|
 |2851. 슈퍼 마리오|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2851.%E2%80%85%EC%8A%88%ED%8D%BC%E2%80%85%EB%A7%88%EB%A6%AC%EC%98%A4/%EC%8A%88%ED%8D%BC%E2%80%85%EB%A7%88%EB%A6%AC%EC%98%A4.java)|
 |2999. 비밀 이메일|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2999.%E2%80%85%EB%B9%84%EB%B0%80%E2%80%85%EC%9D%B4%EB%A9%94%EC%9D%BC/%EB%B9%84%EB%B0%80%E2%80%85%EC%9D%B4%EB%A9%94%EC%9D%BC.java)|
-### 🚀 Gold 
+### 🚀 Gold
 | 문제번호 | 링크 |
 | ----- | ----- |
 |10942. 팰린드롬？|[링크](./%EB%B0%B1%EC%A4%80/Gold/10942.%E2%80%85%ED%8C%B0%EB%A6%B0%EB%93%9C%EB%A1%AC%EF%BC%9F/%ED%8C%B0%EB%A6%B0%EB%93%9C%EB%A1%AC%EF%BC%9F.java)|
@@ -64,7 +59,7 @@
 |7569. 토마토|[링크](./%EB%B0%B1%EC%A4%80/Gold/7569.%E2%80%85%ED%86%A0%EB%A7%88%ED%86%A0/%ED%86%A0%EB%A7%88%ED%86%A0.java)|
 |7576. 토마토|[링크](./%EB%B0%B1%EC%A4%80/Gold/7576.%E2%80%85%ED%86%A0%EB%A7%88%ED%86%A0/%ED%86%A0%EB%A7%88%ED%86%A0.java)|
 |9252. LCS 2|[링크](./%EB%B0%B1%EC%A4%80/Gold/9252.%E2%80%85LCS%E2%80%852/LCS%E2%80%852.java)|
-### 🚀 Silver 
+### 🚀 Silver
 | 문제번호 | 링크 |
 | ----- | ----- |
 |1003. 피보나치 함수|[링크](./%EB%B0%B1%EC%A4%80/Silver/1003.%E2%80%85%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98%E2%80%85%ED%95%A8%EC%88%98/%ED%94%BC%EB%B3%B4%EB%82%98%EC%B9%98%E2%80%85%ED%95%A8%EC%88%98.java)|
