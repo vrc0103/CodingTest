@@ -28,31 +28,24 @@ public class Main {
 
         // 풀이
         int len;
-        int nextR, nextC;
-        int[] now;
-        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> (o1[0] + o1[1]) - (o2[0] + o2[1]));
 
-        pq.add(new int[] {0, 0});
         cnt[0][0] = 1;
+        
+        for(int r = 0; r < size; r++) {
+            for(int c = 0; c < size; c++) {
+                len = map[r][c];
 
-        while(!pq.isEmpty()) {
-            now = pq.remove();
-
-            len = map[now[0]][now[1]];
-
-            for(int i = 0; i < 2; i++) {
-                nextR = now[0] + len * dR[i];
-                nextC = now[1] + len * dC[i];
-
-                if(nextR < 0 || nextR >= size || nextC < 0 || nextC >= size) {
+                if(len == 0) {
                     continue;
                 }
 
-                if(cnt[nextR][nextC] == 0 && map[nextR][nextC] > 0) {
-                    pq.add(new int[] {nextR, nextC});
+                if(r + len < size) {
+                    cnt[r + len][c] += cnt[r][c];
                 }
 
-                cnt[nextR][nextC] += cnt[now[0]][now[1]];
+                if(c + len < size) {
+                    cnt[r][c + len] += cnt[r][c];
+                }
             }
         }
 
