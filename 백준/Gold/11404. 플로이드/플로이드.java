@@ -41,9 +41,7 @@ public class Main {
         for (int k = 1; k <= numN; k++) {
             for (int i = 1; i <= numN; i++) {
                 for (int j = 1; j <= numN; j++) {
-                    if (map[i][k] + map[k][j] < map[i][j]) {
-                        map[i][j] = map[i][k] + map[k][j];
-                    }
+                    map[i][j] = Math.min(map[i][j], map[i][k] + map[k][j]);
                 }
             }
         }
