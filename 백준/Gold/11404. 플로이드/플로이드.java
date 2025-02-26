@@ -8,7 +8,6 @@ public class Main {
 
     static int numN, numE;
     static int[][] map;
-    static int[][] res;
 
     public static void main(String[] args) throws Exception {
         // System.setIn(new FileInputStream("testCase.txt"));
@@ -20,6 +19,10 @@ public class Main {
         numE = Integer.parseInt(br.readLine().trim());
 
         map = new int[numN + 1][numN + 1];
+        for(int i = 1; i <= numN; i++) {
+            Arrays.fill(map[i], 100_000_000);
+            map[i][i] = 0;
+        }
 
         for(int i = 0; i < numE; i++) {
             st = new StringTokenizer(br.readLine().trim());
@@ -28,54 +31,18 @@ public class Main {
             int to = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            if(map[from][to] == 0) {
-                map[from][to] = cost;
-            } else {
-                map[from][to] = Math.min(map[from][to], cost);
-            }
+            map[from][to] = Math.min(map[from][to], cost);
         }
 
         // for(int[] tmp : map) System.out.println(Arrays.toString(tmp));
 
         // 풀이
-        res = new int[numN + 1][numN + 1];
-        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);   // 1번 idx : cost
-
-        // 각 도시마다 다익스트라
-        for(int start = 1; start <= numN; start++) {
-            pq.clear();
-
-            Arrays.fill(res[start], 100_000_000);
-            res[start][start] = 0;
-
-            for(int i = 1; i <= numN; i++) {
-                if(i != start && map[start][i] > 0) {
-                    pq.add(new int[] {i, map[start][i]});
-                }
-            }
-
-            while(!pq.isEmpty()) {
-                int[] now = pq.remove();
-                int dest = now[0];
-                int cost = now[1];
-
-                if(res[start][dest] <= cost) {
-                    continue;
-                }
-
-                res[start][dest] = cost;
-
-                // System.out.printf("start : %d  ,  dest : %d  ,  cost : %d\n", start, dest, cost);
-
-                for(int i = 1; i <= numN; i++) {
-                    if(i == start || i == dest || map[dest][i] == 0) {
-                        continue;
-                    }
-
-                    int nextCost = cost + map[dest][i];
-
-                    if(res[start][i] > nextCost) {
-                        pq.add(new int[] {i, nextCost});
+        // 플로이드 - 워셜
+        for (int k = 1; k <= numN; k++) {
+            for (int i = 1; i <= numN; i++) {
+                for (int j = 1; j <= numN; j++) {
+                    if (map[i][k] + map[k][j] < map[i][j]) {
+                        map[i][j] = map[i][k] + map[k][j];
                     }
                 }
             }
@@ -83,7 +50,7 @@ public class Main {
 
         for(int r = 1; r <= numN; r++) {
             for(int c = 1; c <= numN; c++) {
-                sb.append(res[r][c] == 100_000_000 ? 0 : res[r][c]).append(" ");
+                sb.append(map[r][c] == 100_000_000 ? 0 : map[r][c]).append(" ");
             }
             sb.append("\n");
         }
