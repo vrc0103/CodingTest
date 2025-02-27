@@ -42,12 +42,6 @@ public class Main {
                 flag = false;
                 DFS(r, 0);
             }
-
-            // System.out.println(r);
-            // for(char[] tmp : map) {
-            //     System.out.println(Arrays.toString(tmp));
-            // }
-            // System.out.println();
         }
     }
 
@@ -62,46 +56,25 @@ public class Main {
 
             res++;
 
-            // int nowR = locR;
-
-            // for(int c = col - 2; c >= 0; c--) {
-            //     if(nowR > 0 && pipe[nowR - 1][c]) {
-            //         nowR--;
-            //     } else if(nowR < row - 1 && pipe[nowR + 1][c]) {
-            //         nowR++;
-            //     }
-
-            //     map[nowR][c] = map[locR][locC];
-            // }
-
             flag = true;
-
-            // System.out.println("cycle: " + res);
-            // for(boolean[] tmp : pipe) {
-            //     for(int i = 0; i < tmp.length; i++) {
-            //         System.out.printf("%d ", tmp[i] ? res : 0);
-            //     }
-            //     System.out.println();
-            // }
-            // System.out.println();
 
             return;
         }
 
         pipe[locR][locC] = true;
 
-        if(locR > 0 && map[locR - 1][locC + 1] == '.' && !pipe[locR - 1][locC + 1]) {
-            DFS(locR - 1, locC + 1);
-        }
+        for(int dR = -1; dR <= 1; dR++) {
+            int nextR = locR + dR;
+            int nextC = locC + 1;
 
-        if(map[locR][locC + 1] == '.' && !pipe[locR][locC + 1]) {
-            DFS(locR, locC + 1);
+            if(nextR < 0 || nextR >= row || map[nextR][nextC] == 'x' || pipe[nextR][nextC]) {
+                continue;
+            }
+
+            DFS(nextR, nextC);
         }
         
-        if(locR < row - 1 && map[locR + 1][locC + 1] == '.' && !pipe[locR + 1][locC + 1]) {
-            DFS(locR + 1, locC + 1);
-        }
-        
+        // 어차피 연결에 실패한 루트이므로 다시 봐도 다시 실패함 -> 굳이 원복하지 않아도 됨
         // if(!flag) {
         //     pipe[locR][locC] = false;
         // }
