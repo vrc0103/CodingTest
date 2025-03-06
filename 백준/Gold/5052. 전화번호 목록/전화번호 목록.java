@@ -7,7 +7,44 @@ public class Main {
     static StringBuilder sb;
 
     static String res;
-    static HashMap<Integer, ArrayList<String>> hmap;
+
+    static class Trie {
+        boolean isEnd = false;              // 현재 노드가 마지막
+        boolean hasChild = false;           // 현재 노드 이후에 추가 노드가 있는지
+        Trie[] children = new Trie[10];     // 0 ~ 9로 다음 숫자가 있는지
+
+        public boolean add(String nums) {
+            Trie node = this;
+
+            for(char c : nums.toCharArray()) {
+                int num = c - '0';
+
+                // 다음 숫자가 없던 숫자면 새로 추가
+                if(node.children[num] == null) {
+                    node.children[num] = new Trie();
+                    node.hasChild = true;
+                }
+
+                // 다음 숫자로 이동
+                node = node.children[num];
+
+                // 노드가 마지막 = 저장된 전화번호가 현재 전화번호의 접두사임
+                if (node.isEnd) {
+                    return false;
+                }
+            }
+
+            // 마지막 노드 표시
+            node.isEnd = true;
+
+            // 전화번호 끝났는데 현재 노드에 자식 노드 존재 = 현재 전화번호가 저장된 전화번호의 접두사임
+            if(node.hasChild) {
+                return false;
+            }
+
+            return true;
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         // System.setIn(new FileInputStream("testCase.txt"));
@@ -17,58 +54,27 @@ public class Main {
         int testCase = Integer.parseInt(br.readLine().trim());
 
         for(int tc = 1; tc <= testCase; tc++) {
-            setInfo();
-
             getRes();
 
-            sb.append(res);
+            sb.append(res).append("\n");
         }
 
         System.out.print(sb);
     }
 
-    static void setInfo() throws Exception {
+    static void getRes() throws Exception {
         int cnt = Integer.parseInt(br.readLine().trim());
-
-        hmap = new HashMap<>();
-
-        for(int i = 1; i <= 10; i++) {
-            hmap.put(i, new ArrayList<>());
-        }
+        Trie trie = new Trie();
+        boolean pos = true;
         
         while(cnt-- > 0) {
             String input = br.readLine().trim();
 
-            hmap.get(input.length()).add(input);
-        }
-    }
-
-    static void getRes() {
-        res = "YES\n";
-
-        // 길이가 2인 번호부터
-        for(int len = 2; len <= 10; len++) {
-            // 해당 길이의 각 번호
-            for(String target : hmap.get(len)) {
-                // 비교할 길이
-                for(int i = 1; i < len; i++) {
-                    // 해당 길이의 번호
-                    for(String tmp : hmap.get(i)) {
-                        //각 자릿수
-                        for(int j = 0; j < i; j++) {
-                            if(target.charAt(j) != tmp.charAt(j)) {
-                                break;
-                            }
-                            // 모든 문자열이 포함됨
-                            if(j == i - 1) {
-                                res = "NO\n";
-
-                                return;
-                            }
-                        }
-                    }
-                }
+            if(pos && !trie.add(input)) {
+                pos = false;
             }
         }
+        
+        res = pos ? "YES" : "NO";
     }
 }
