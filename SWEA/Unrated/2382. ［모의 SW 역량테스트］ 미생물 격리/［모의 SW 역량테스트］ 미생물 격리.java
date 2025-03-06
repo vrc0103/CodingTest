@@ -19,14 +19,18 @@ public class Solution {
         int dir;
 
         boolean isDup;
-        PriorityQueue<Integer> dup;
+        int max;
+        int sum;
 
         public Group(int row, int col, int vol, int dir) {
             this.row = row;
             this.col = col;
             this.vol = vol;
             this.dir = dir;
+
             this.isDup = false;
+            this.max = 0;
+            this.sum = 0;
         }
     }
 
@@ -94,20 +98,20 @@ public class Solution {
                 if(map[now.row][now.col] == null) {
                     map[now.row][now.col] = now;
                 } else {
-                    // 첫 중첩이면 PQ 생성
                     if(!map[now.row][now.col].isDup) {
                         map[now.row][now.col].isDup = true;
-                        map[now.row][now.col].dup = new PriorityQueue<>(Collections.reverseOrder());
-                        map[now.row][now.col].dup.add(map[now.row][now.col].vol);
+                        map[now.row][now.col].max = map[now.row][now.col].vol;
+                        map[now.row][now.col].sum = map[now.row][now.col].vol;
                     }
 
                     // 더 큰 군집 들어오면 방향 갱신
-                    if(map[now.row][now.col].dup.peek() < now.vol) {
+                    if(map[now.row][now.col].max < now.vol) {
                         map[now.row][now.col].dir = now.dir;
+                        map[now.row][now.col].max = now.vol;
                     }
 
                     // 군집 추가
-                    map[now.row][now.col].dup.add(now.vol);
+                    map[now.row][now.col].sum += now.vol;
                 }
             }
 
@@ -115,14 +119,10 @@ public class Solution {
             for(int r = 0; r < size; r++) {
                 for(int c = 0; c < size; c++) {
                     if(map[r][c] != null) {
-                        // 겹친 군집이면 합치기기
+                        // 겹친 군집이면 합치기
                         if(map[r][c].isDup) {
-                            map[r][c].vol = 0;
+                            map[r][c].vol = map[r][c].sum;
                             map[r][c].isDup = false;
-
-                            while(!map[r][c].dup.isEmpty()) {
-                                map[r][c].vol += map[r][c].dup.remove();
-                            }
                         }
 
                         q.add(map[r][c]);
