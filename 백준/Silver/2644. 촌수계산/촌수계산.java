@@ -8,17 +8,7 @@ public class Main {
     static int res;
     static int num, rel;
     static int[] target;
-    static Family[] family;
-
-    static class Family {
-        int parent;
-        ArrayList<Integer> child;
-
-        public Family() {
-            this.parent = 0;
-            this.child = new ArrayList<>();
-        }
-    }
+    static int[] parent;
 
     public static void main(String[] args) throws Exception {
         // System.setIn(new FileInputStream("testCase.txt"));
@@ -33,11 +23,7 @@ public class Main {
 
     static void setInfo() throws Exception {
         num = Integer.parseInt(br.readLine().trim());
-        family = new Family[num + 1];
-
-        for(int i = 1; i <= num; i++) {
-            family[i] = new Family();
-        }
+        parent = new int[num + 1];
 
         st = new StringTokenizer(br.readLine().trim());
         target = new int[2];
@@ -52,8 +38,7 @@ public class Main {
             int par = Integer.parseInt(st.nextToken());
             int chd = Integer.parseInt(st.nextToken());
 
-            family[par].child.add(chd);
-            family[chd].parent = par;
+            parent[chd] = par;
         }
     }
 
@@ -61,18 +46,15 @@ public class Main {
         ArrayList<Integer> par1 = new ArrayList<>();
         ArrayList<Integer> par2 = new ArrayList<>();
 
-        while(family[target[0]] != null) {
+        while(target[0] != 0) {
             par1.add(target[0]);
-            target[0] = family[target[0]].parent;
+            target[0] = parent[target[0]];
         }
 
-        while (family[target[1]] != null) {
+        while (target[1] != 0) {
             par2.add(target[1]);
-            target[1] = family[target[1]].parent;
+            target[1] = parent[target[1]];
         }
-
-        // System.out.println(par1.toString());
-        // System.out.println(par2.toString());
 
         for(int i = 0; i < par1.size(); i++) {
             for(int j = 0; j < par2.size(); j++) {
