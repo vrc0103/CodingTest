@@ -8,7 +8,7 @@ public class Main {
 
     static int num, cnt;
     static int[] order;
-    static HashMap<Integer, ArrayList<Integer>> hmap = new HashMap<>();
+    static ArrayList<ArrayList<Integer>> list = new ArrayList<>();
     static ArrayDeque<Integer> q = new ArrayDeque<>();
 
     public static void main(String[] args) throws Exception {
@@ -29,17 +29,16 @@ public class Main {
         cnt = Integer.parseInt(st.nextToken());
 
         order = new int[num + 1];
+        for(int i = 0; i <= num; i++) {
+            list.add(new ArrayList<>());
+        }
 
         while(cnt-- > 0) {
             st = new StringTokenizer(br.readLine().trim());
             int student1 = Integer.parseInt(st.nextToken());
             int student2 = Integer.parseInt(st.nextToken());
 
-            if (hmap.get(student1) == null) {
-                hmap.put(student1, new ArrayList<>());
-            }
-
-            hmap.get(student1).add(student2);
+            list.get(student1).add(student2);
             order[student2]++;
 
             // 아래처럼 구현하면 new ArrayList를 할당해서 저장하고 반환하긴 하는데 해시맵에 들어가지는 않음
@@ -60,12 +59,8 @@ public class Main {
 
             sb.append(now).append(" ");
 
-            if(hmap.get(now) == null) {
-                continue;
-            }
-
             // 연결된 노드의 진입차수 1 감소
-            for(int tmp : hmap.get(now)) {
+            for(int tmp : list.get(now)) {
                 order[tmp]--;
 
                 // 진입차수가 0인 노드를 큐에 추가
