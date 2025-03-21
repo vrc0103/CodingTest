@@ -2,89 +2,101 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader br;
     static StringTokenizer st;
 
-    static int res = 0;
+    static int res;
     static int size;
-    static int apple, change;
     static char[][] map;
-    static ArrayList<int[]> dirCh = new ArrayList<>();
+    static int[][] dirs;
+    static ArrayDeque<int[]> snake = new ArrayDeque<>();
 
     static int[] dR = {0, 1, 0, -1};
     static int[] dC = {1, 0, -1, 0};
 
     public static void main(String[] args) throws Exception {
-        // 정보
+        // System.setIn(new FileInputStream("testCase.txt"));
+        br = new BufferedReader(new InputStreamReader(System.in));
+
+        setInfo();
+
+        getRes();
+
+        System.out.print(res);
+    }
+
+    static void setInfo() throws Exception {
         size = Integer.parseInt(br.readLine().trim());
         map = new char[size + 1][size + 1];
 
-        for(int i = 1; i <= size; i++) {
-            Arrays.fill(map[i], '0');
+        for(char[] tmp : map) {
+            Arrays.fill(tmp, '.');
         }
 
-        apple = Integer.parseInt(br.readLine().trim());
-        for(int i = 0; i < apple; i++) {
+        int cnt = Integer.parseInt(br.readLine().trim());
+        while(cnt-- > 0) {
             st = new StringTokenizer(br.readLine().trim());
+            int row = Integer.parseInt(st.nextToken());
+            int col = Integer.parseInt(st.nextToken());
 
-            map[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] = 'a';
+            map[row][col] = 'a';
         }
 
-        change = Integer.parseInt(br.readLine().trim());
-        for(int i = 0; i < change; i++) {
+        cnt = Integer.parseInt(br.readLine().trim());
+        dirs = new int[cnt][2];
+        for(int i = 0; i < cnt; i++) {
             st = new StringTokenizer(br.readLine().trim());
+            int time = Integer.parseInt(st.nextToken());
+            char cmd = st.nextToken().charAt(0);
 
-            dirCh.add(new int[] {Integer.parseInt(st.nextToken()), st.nextToken().charAt(0)});
+            dirs[i][0] = time;
+
+            if(cmd == 'L') {
+                dirs[i][1] = 3;
+            } else {
+                dirs[i][1] = 1;
+            }
         }
+    }
 
-        //풀이
+    static void getRes() {
         int dir = 0;
-        int nextR, nextC;
-        int[] head, tail;
-        Deque<int[]> dq = new LinkedList<>();
+        int now = 0;
 
-        dq.add(new int[] {1, 1});
-
-        head = dq.peekFirst();
-        tail = dq.peekLast();
-
+        snake.add(new int[] {1, 1});
         map[1][1] = 's';
 
         while(true) {
+            // System.out.println(res);
+            // for (char[] tmp : map) {
+            //     System.out.println(Arrays.toString(tmp));
+            // }
+            // System.out.println();
+
+            // 시간 되면 방향 전환
+            if(now < dirs.length && dirs[now][0] == res) {
+                dir = (dir + dirs[now][1]) % 4;
+                now++;
+            }
+
             res++;
 
-            nextR = head[0] + dR[dir];
-            nextC = head[1] + dC[dir];
+            int nextR = snake.peek()[0] + dR[dir];
+            int nextC = snake.peek()[1] + dC[dir];
 
-            // 벽이나 몸에 부딛힘
             if(nextR <= 0 || nextR > size || nextC <= 0 || nextC > size || map[nextR][nextC] == 's') {
                 break;
             }
 
-            dq.addFirst(new int[] {nextR, nextC});
-            head = dq.peekFirst();
-
-            // 이동 위치에 사과 없으면 꼬리 1 감소
-            if(map[head[0]][head[1]] != 'a') {
-                dq.removeLast();
-                map[tail[0]][tail[1]] = '0';
-                tail = dq.peekLast();
+            // 사과 못먹으면 꼬리 짧아짐
+            if (map[nextR][nextC] != 'a') {
+                int[] rmv = snake.removeLast();
+                map[rmv[0]][rmv[1]] = '.';
             }
 
+            // 한 칸 이동
+            snake.addFirst(new int[] {nextR, nextC});
             map[nextR][nextC] = 's';
-
-            // 방향 전환
-            if(dirCh.size() > 0 && dirCh.get(0)[0] == res) {
-                if((char) dirCh.get(0)[1] == 'L') {
-                    dir = (dir + 3) % 4;
-                } else {
-                    dir = (dir + 1) % 4;
-                }
-
-                dirCh.remove(0);
-            }
         }
-
-        System.out.println(res);
     }
 }
