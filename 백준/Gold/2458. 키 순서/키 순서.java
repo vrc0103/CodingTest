@@ -2,82 +2,72 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	static StringBuilder sb = new StringBuilder();
-	
-	static int res;
-	static int num, cnt;
-	static boolean[][] sml;
+    static BufferedReader br;
+    static StringTokenizer st;
 
-	public static void main(String[] args) throws Exception {
-		setInfo();
-		
-		getRes();
+    static int res;
+    static int num, cnt;
+    static int[][] graph;
 
-		System.out.println(res);
-	}
+    static int INF = 1_000_000_000;
 
-	static void setInfo() throws Exception {
-		int n1, n2;
-		
-		st = new StringTokenizer(br.readLine().trim());
-		num = Integer.parseInt(st.nextToken());
-		cnt = Integer.parseInt(st.nextToken());
-		
-		sml = new boolean[num + 1][num + 1];
-		
-		while(cnt-- > 0) {
-			st = new StringTokenizer(br.readLine().trim());
-			n1 = Integer.parseInt(st.nextToken());
-			n2 = Integer.parseInt(st.nextToken());
-			
-			sml[n1][n2] = true;
-		}
-	}
-	
-	static void getRes() {
-		int now;
-		int check;
-		boolean[] checked;
-		Queue<Integer> queue = new ArrayDeque<>();
-		
-		for(int i = 1; i <= num; i++) {
-			check = 1;
-			checked = new boolean[num + 1];
-			checked[i] = true;
-			
-			queue.add(i);
-			
-			while(!queue.isEmpty()) {
-				now = queue.remove();
-				
-				for(int j = 1; j <= num; j++) {
-					if(sml[now][j] && !checked[j]) {
-						queue.add(j);
-						checked[j] = true;
-						check++;
-					}
-				}
-			}
-			
-			queue.add(i);
-			
-			while(!queue.isEmpty()) {
-				now = queue.remove();
-				
-				for(int j = 1; j <= num; j++) {
-					if(sml[j][now] && !checked[j]) {
-						queue.add(j);
-						checked[j] = true;
-						check++;
-					}
-				}
-			}
-			
-			if(check == num) {
-				res++;
-			}
-		}
-	}
+
+    public static void main(String[] args) throws Exception {
+        br = new BufferedReader(new InputStreamReader(System.in));
+
+        setInfo();
+
+        getRes();
+
+        System.out.print(res);
+    }
+
+    static void setInfo() throws Exception {
+        res = 0;
+        
+        st = new StringTokenizer(br.readLine().trim());
+        num = Integer.parseInt(st.nextToken());
+        cnt = Integer.parseInt(st.nextToken());
+
+        graph = new int[num + 1][num + 1];
+
+        // 큰 값으로 초기화
+        for(int i = 0; i < num + 1; i++) {
+            Arrays.fill(graph[i], INF);
+            graph[i][i] = 0;
+        }
+
+        // 연결된 노드 저장
+        while(cnt-- > 0) {
+            st = new StringTokenizer(br.readLine().trim());
+            int from = Integer.parseInt(st.nextToken());
+            int to = Integer.parseInt(st.nextToken());
+
+            graph[from][to] = 1;
+        }
+    }
+
+    static void getRes() {
+        // 플루이드 워셜
+        for(int k = 1; k <= num; k++) {
+            for(int i = 1; i <= num; i++) {
+                for(int j = 1; j <= num; j++) {
+                    graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
+                }
+            }
+        }
+
+        for(int i = 1; i <= num; i++) {
+
+            for(int j = 1; j <= num; j++) {
+                if(graph[i][j] == INF && graph[j][i] == INF) {
+                    break;
+                }
+
+                if(j == num) {
+                    res++;
+                }
+            }
+        }
+    }
 }
