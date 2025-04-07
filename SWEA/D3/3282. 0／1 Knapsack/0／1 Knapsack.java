@@ -9,7 +9,7 @@ public class Solution {
     static int res;
     static int num, vol;
     static int[][] info;
-    static int[][] dp;
+    static int[] dp;
 
     public static void main(String[] args) throws Exception {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -34,7 +34,7 @@ public class Solution {
         vol = Integer.parseInt(st.nextToken());
 
         info = new int[num + 1][2];
-        dp = new int[num + 1][vol + 1];
+        dp = new int[vol + 1];
 
         for(int i = 1; i <= num; i++) {
             st = new StringTokenizer(br.readLine().trim());
@@ -47,16 +47,12 @@ public class Solution {
     }
 
     static void getRes() {
-        for(int i = 1; i <= vol; i++) {
-            for(int j = 1; j <= num; j++) {
-                if(i < info[j][1]) {
-                    dp[j][i] = dp[j - 1][i];
-                } else {
-                    dp[j][i] = Math.max(dp[j - 1][i], dp[j - 1][i - info[j][1]] + info[j][0]);
-                }
+        for(int i = 1; i <= num; i++) {
+            for (int j = vol; j >= info[i][1]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - info[i][1]] + info[i][0]);
             }
         }
 
-        res = dp[num][vol];
+        res = dp[vol];
     }
 }
