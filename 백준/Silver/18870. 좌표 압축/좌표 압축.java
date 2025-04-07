@@ -44,8 +44,6 @@ public class Main {
             }
         }
 
-        Collections.sort(list);
-
         for(int i = 0; i < len; i++) {
             int left = 0;
             int right = list.size() - 1;
