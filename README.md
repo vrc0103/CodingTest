@@ -53,6 +53,7 @@
 ### 🚀 Gold
 | 문제번호 | 링크 |
 | ----- | ----- |
+|1043. 거짓말|[링크](./%EB%B0%B1%EC%A4%80/Gold/1043.%E2%80%85%EA%B1%B0%EC%A7%93%EB%A7%90/README.md)|
 |1074. Z|[링크](./%EB%B0%B1%EC%A4%80/Gold/1074.%E2%80%85Z/Z.java)|
 |10942. 팰린드롬？|[링크](./%EB%B0%B1%EC%A4%80/Gold/10942.%E2%80%85%ED%8C%B0%EB%A6%B0%EB%93%9C%EB%A1%AC%EF%BC%9F/README.md)|
 |1107. 리모컨|[링크](./%EB%B0%B1%EC%A4%80/Gold/1107.%E2%80%85%EB%A6%AC%EB%AA%A8%EC%BB%A8/README.md)|
