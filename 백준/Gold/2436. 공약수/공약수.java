@@ -31,18 +31,13 @@ public class Main {
                 int a = num / i;
                 int b = i;
 
-                while(b > 1 && a % b != 0) {
+                while(b > 0) {
                     int tmp = a;
-
-                    if(a - b > b) {
-                        a = a - b;
-                    } else {
-                        a = b;
-                        b = tmp - b;
-                    }
+                    a = b;
+                    b = tmp % b;
                 }
 
-                if(b <= 1) {
+                if(a == 1) {
                     sb.append(i * max).append(" ").append(num / i * max);
                     break;
                 }
