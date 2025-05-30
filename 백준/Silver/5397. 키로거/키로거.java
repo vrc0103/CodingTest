@@ -6,7 +6,7 @@ public class Main {
     static StringTokenizer st;
     static StringBuilder sb;
 
-    static Stack<Character> left, right;
+    static Deque<Character> left, right;
 
     public static void main(String[] args) throws Exception {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,8 +22,10 @@ public class Main {
     }
 
     static void getRes() throws Exception {
-        left = new Stack<>();
-        right = new Stack<>();
+        StringBuilder tcRes = new StringBuilder();
+
+        left = new ArrayDeque<>();
+        right = new ArrayDeque<>();
 
         String log = br.readLine().trim();
         int len = log.length();
@@ -51,13 +53,15 @@ public class Main {
         }
 
         while (!left.isEmpty()) {
-            right.push(left.pop());
+            tcRes.append(left.pop());
         }
+
+        tcRes.reverse();
 
         while (!right.isEmpty()) {
-            sb.append(right.pop());
+            tcRes.append(right.pop());
         }
 
-        sb.append("\n");
+        sb.append(tcRes).append("\n");
     }
 }
