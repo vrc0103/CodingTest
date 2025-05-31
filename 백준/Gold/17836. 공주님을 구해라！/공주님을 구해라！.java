@@ -56,6 +56,10 @@ public class Main {
         while (!pq.isEmpty()) {
             int[] now = pq.poll();
 
+            if (now[2] > limit) {
+                break;
+            }
+
             if (now[0] == row - 1 && now[1] == col - 1) {
                 res = now[2];
                 break;
