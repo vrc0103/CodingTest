@@ -43,18 +43,15 @@ public class Main {
 
     static void getRes() {
         int[] gramr = null;
-        int[][] cnt = new int[row][col];
-        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[2] - o2[2]);
+        boolean[][] visited = new boolean[row][col];
+        ArrayDeque<int[]> q = new ArrayDeque<>();
 
         res = limit + 1;
 
-        for (int i = 0; i < row; i++) {
-            Arrays.fill(cnt[i], row * col);
-        }
-
-        pq.offer(new int[] { 0, 0, 0 });
-        while (!pq.isEmpty()) {
-            int[] now = pq.poll();
+        q.offer(new int[] { 0, 0, 0 });
+        visited[0][0] = true;
+        while (!q.isEmpty()) {
+            int[] now = q.poll();
 
             if (now[2] > limit) {
                 break;
@@ -72,15 +69,14 @@ public class Main {
             for (int i = 0; i < 4; i++) {
                 int nextR = now[0] + dR[i];
                 int nextC = now[1] + dC[i];
-                int cost = now[2] + 1;
 
-                if (nextR < 0 || nextR >= row || nextC < 0 || nextC >= col) {
+                if (nextR < 0 || nextR >= row || nextC < 0 || nextC >= col || visited[nextR][nextC]) {
                     continue;
                 }
 
-                if (map[nextR][nextC] != 1 && cnt[nextR][nextC] > cost) {
-                    cnt[nextR][nextC] = cost;
-                    pq.offer(new int[] { nextR, nextC, cost });
+                if (map[nextR][nextC] != 1) {
+                    q.offer(new int[] { nextR, nextC, now[2] + 1 });
+                    visited[nextR][nextC] = true;
                 }
             }
         }
