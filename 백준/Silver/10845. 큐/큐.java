@@ -17,8 +17,10 @@ public class Main {
 
     static class MyQueue {
         Node first, last;
+        int len;
 
         MyQueue() {
+            len = 0;
         }
 
         void push(int i) {
@@ -31,6 +33,7 @@ public class Main {
                 tmp.prev = last;
             }
 
+            len++;
             last = tmp;
         }
 
@@ -49,23 +52,16 @@ public class Main {
                 first = first.next;
             }
 
+            len--;
             return num;
         }
 
         int size() {
-            int len = 0;
-            Node tmp = first;
-
-            while (tmp != null) {
-                len++;
-                tmp = tmp.next;
-            }
-
             return len;
         }
 
         int empty() {
-            return size() > 0 ? 0 : 1;
+            return len == 0 ? 1 : 0;
         }
 
         int front() {
