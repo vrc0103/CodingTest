@@ -143,6 +143,7 @@
 | ----- | ----- |
 |14865. 곡선 자르기|[링크](./%EB%B0%B1%EC%A4%80/Platinum/14865.%E2%80%85%EA%B3%A1%EC%84%A0%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0/README.md)|
 |16496. 큰 수 만들기|[링크](./%EB%B0%B1%EC%A4%80/Platinum/16496.%E2%80%85%ED%81%B0%E2%80%85%EC%88%98%E2%80%85%EB%A7%8C%EB%93%A4%EA%B8%B0/README.md)|
+|1854. K번째 최단경로 찾기|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1854.%E2%80%85K%EB%B2%88%EC%A7%B8%E2%80%85%EC%B5%9C%EB%8B%A8%EA%B2%BD%EB%A1%9C%E2%80%85%EC%B0%BE%EA%B8%B0/K%EB%B2%88%EC%A7%B8%E2%80%85%EC%B5%9C%EB%8B%A8%EA%B2%BD%EB%A1%9C%E2%80%85%EC%B0%BE%EA%B8%B0.java)|
 ### 🚀 Silver
 | 문제번호 | 링크 |
 | ----- | ----- |
