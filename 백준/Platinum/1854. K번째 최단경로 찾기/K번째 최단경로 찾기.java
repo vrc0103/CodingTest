@@ -8,6 +8,7 @@ public class Main {
 
     static int node, edge, K;
     static List<List<int[]>> graph;
+    static List<PriorityQueue<Integer>> route;
 
     public static void main(String[] args) throws Exception {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,6 +23,7 @@ public class Main {
 
     static void setInfo() throws Exception {
         graph = new ArrayList<>();
+        route = new ArrayList<>();
 
         st = new StringTokenizer(br.readLine().trim());
         node = Integer.parseInt(st.nextToken());
@@ -30,7 +32,10 @@ public class Main {
 
         for (int i = 0; i <= node; i++) {
             graph.add(new ArrayList<>());
+            route.add(new PriorityQueue<>((o1, o2) -> o2 - o1));
         }
+
+        route.get(1).add(0);
 
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine().trim());
@@ -43,34 +48,37 @@ public class Main {
     }
 
     static void getRes() {
-        int[] cnt = new int[node + 1];
-        int[] cost = new int[node + 1];
         PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
 
         pq.offer(new int[] { 1, 0 });
         while (!pq.isEmpty()) {
             int[] now = pq.poll();
 
-            if (cnt[now[0]] >= K) {
+            // 기존 경로 개수가 K 이상이면서, 이번 경로 비용이 더 크면 패스
+            if (route.get(now[0]).size() >= K && route.get(now[0]).peek() < now[1]) {
                 continue;
             }
-
-            cost[now[0]] = now[1];
-            cnt[now[0]]++;
 
             for (int[] next : graph.get(now[0])) {
                 int nNode = next[0];
                 int nCost = next[1] + now[1];
+                PriorityQueue<Integer> nRoute = route.get(nNode);
 
-                if (cnt[nNode] < K) {
+                if (nRoute.size() < K) {
+                    nRoute.offer(nCost);
+                    pq.offer(new int[] { nNode, nCost });
+                } else if (nRoute.peek() > nCost) {
+                    // K개의 경로가 저장되어있을 때 새로운 경로가 기존 경로보다 작으면 갱신
+                    nRoute.poll();
+                    nRoute.offer(nCost);
                     pq.offer(new int[] { nNode, nCost });
                 }
             }
         }
 
         for (int i = 1; i <= node; i++) {
-            if (cnt[i] == K) {
-                sb.append(cost[i]);
+            if (route.get(i).size() == K) {
+                sb.append(route.get(i).peek());
             } else {
                 sb.append(-1);
             }
