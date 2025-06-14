@@ -6,8 +6,8 @@ public class Main {
     static StringTokenizer st;
     static StringBuilder sb;
 
-    static long res;
-    static long max;
+    static int res;
+    static int max;
     static int node, edge;
     static int[] root;
     static boolean isEnd;
@@ -15,9 +15,9 @@ public class Main {
 
     static class Edge implements Comparable<Edge> {
         int n1, n2;
-        long cost;
+        int cost;
 
-        public Edge(int n1, int n2, long cost) {
+        public Edge(int n1, int n2, int cost) {
             this.n1 = n1;
             this.n2 = n2;
             this.cost = cost;
@@ -25,7 +25,7 @@ public class Main {
 
         @Override
         public int compareTo(Edge e) {
-            return Long.compare(this.cost, e.cost);
+            return this.cost - e.cost;
         }
     }
 
@@ -71,7 +71,7 @@ public class Main {
             st = new StringTokenizer(br.readLine().trim());
             int n1 = Integer.parseInt(st.nextToken());
             int n2 = Integer.parseInt(st.nextToken());
-            long cost = Long.parseLong(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
             pq.offer(new Edge(n1, n2, cost));
 
@@ -80,7 +80,7 @@ public class Main {
     }
 
     static void getRes() {
-        long sum = 0;
+        int sum = 0;
 
         while (!pq.isEmpty()) {
             Edge now = pq.poll();
