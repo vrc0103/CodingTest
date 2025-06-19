@@ -40,40 +40,14 @@ public class Main {
             map.add(new ArrayList<>());
         }
 
-        List<PriorityQueue<Edge>> all = new ArrayList<>();
-        for (int i = 0; i <= node; i++) {
-            all.add(new PriorityQueue<>((o1, o2) -> {
-                if (o1.num == o2.num) {
-                    // 가장 높은 비용의 다리 선택
-                    return o2.cost - o1.cost;
-                }
-
-                return o1.num - o2.num;
-            }));
-        }
-
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine().trim());
             int num1 = Integer.parseInt(st.nextToken());
             int num2 = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            all.get(num1).add(new Edge(num2, cost));
-            all.get(num2).add(new Edge(num1, cost));
-        }
-
-        for (int i = 1; i <= node; i++) {
-            PriorityQueue<Edge> tmp = all.get(i);
-            List<Edge> bridge = map.get(i);
-
-            while (!tmp.isEmpty()) {
-                if (bridge.size() != 0 && bridge.get(bridge.size() - 1).num == tmp.peek().num) {
-                    // 중복 제거
-                    tmp.poll();
-                } else {
-                    bridge.add(tmp.poll());
-                }
-            }
+            map.get(num1).add(new Edge(num2, cost));
+            map.get(num2).add(new Edge(num1, cost));
         }
 
         st = new StringTokenizer(br.readLine().trim());
