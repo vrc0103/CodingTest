@@ -7,6 +7,7 @@ public class Main {
     static StringBuilder sb;
 
     static int size, numUpdate, numSum;
+    static int treeHeight;
     static long[] arr, tree;
 
     public static void main(String[] args) throws Exception {
@@ -26,15 +27,13 @@ public class Main {
         numUpdate = Integer.parseInt(st.nextToken());
         numSum = Integer.parseInt(st.nextToken());
 
-        arr = new long[size + 1];
-        for (int i = 1; i <= size; i++) {
+        arr = new long[size];
+        for (int i = 0; i < size; i++) {
             arr[i] = Long.parseLong(br.readLine().trim());
         }
 
         // 초기 세그먼트 트리 구현
-        tree = new long[4 * size]; // 정확하진 않지만 4 * size로 해도 충분함
-
-        init(1, 1, size);
+        init();
 
         // 명령어에 따른 계산, 갱신
         for (int i = 0; i < numSum + numUpdate; i++) {
@@ -46,67 +45,69 @@ public class Main {
                 int idx = Integer.parseInt(st.nextToken());
                 long newVal = Long.parseLong(st.nextToken());
 
-                update(1, 1, size, idx, newVal);
+                update(idx, newVal);
             }
             // sum
             else {
                 int left = Integer.parseInt(st.nextToken());
                 int right = Integer.parseInt(st.nextToken());
 
-                sb.append(sum(1, 1, size, left, right)).append("\n");
+                sb.append(sum(left, right)).append("\n");
             }
         }
     }
 
-    static void init(int now, int start, int end) {
-        // 리프 노드이면 입력받은 값 저장
-        if (start == end) {
-            tree[now] = arr[start];
-        }
-        // 중간 노드이면 재귀 수행 후 누적값 저장
-        else {
-            int mid = (start + end) / 2;
-            init(now * 2, start, mid);
-            init(now * 2 + 1, mid + 1, end);
+    static void init() {
+        treeHeight = (int) Math.ceil(Math.log(size) / Math.log(2));
+        tree = new long[1 << (treeHeight + 1)];
 
+        int leafStart = 1 << treeHeight;
+
+        // 리프 노드
+        for (int i = 0; i < size; i++) {
+            tree[leafStart + i] = arr[i];
+        }
+
+        // 중간 노드
+        for (int i = leafStart - 1; i > 0; i--) {
+            tree[i] = tree[i * 2] + tree[i * 2 + 1];
+        }
+    }
+
+    static void update(int idx, long newVal) {
+        // idx번에 해당하는 리프 노드 갱신
+        int now = (1 << treeHeight) + idx - 1;
+        tree[now] = newVal;
+
+        // 누적값 갱신
+        while (now > 1) {
+            now /= 2;
             tree[now] = tree[now * 2] + tree[now * 2 + 1];
         }
     }
 
-    static void update(int now, int start, int end, int idx, long newVal) {
-        // 범위를 벗어난 경우 무시
-        if (idx < start || end < idx) {
-            return;
+    static long sum(int left, int right) {
+        // 일반 배열의 인덱스를 리프 노드의 인덱스로 변경
+        int now = (1 << treeHeight);
+        int l = now + left - 1;
+        int r = now + right - 1;
+        long res = 0;
+
+        while (l <= r) {
+            // 시작점이 오른쪽 자식 노드 -> 부모로 이동하기 전에 해당 노드만 합산
+            if (l % 2 == 1) {
+                res += tree[l++];
+            }
+            // 끝점이 왼쪽 자식 노드 -> 부모로 이동하기 전에 해당 노드만 합산
+            if (r % 2 == 0) {
+                res += tree[r--];
+            }
+
+            // 나머지는 양쪽 자식 모두 계산에 포함되므로 부모 노드로 이동
+            l /= 2;
+            r /= 2;
         }
 
-        // build() 메서드와 유사
-        if (start == end) {
-            tree[now] = newVal;
-        } else {
-            int mid = (start + end) / 2;
-            update(now * 2, start, mid, idx, newVal);
-            update(now * 2 + 1, mid + 1, end, idx, newVal);
-
-            tree[now] = tree[now * 2] + tree[now * 2 + 1];
-        }
-    }
-
-    static long sum(int now, int start, int end, int left, int right) {
-        // 아예 겹치지 않는 경우
-        if (right < start || end < left) {
-            return 0;
-        }
-
-        // 완전히 포함되는 경우
-        if (left <= start && end <= right) {
-            return tree[now];
-        }
-
-        // 일부만 포함되는 경우 좌우 자식 노드의 결과를 합산
-        int mid = (start + end) / 2;
-        long lsum = sum(now * 2, start, mid, left, right);
-        long rsum = sum(now * 2 + 1, mid + 1, end, left, right);
-
-        return lsum + rsum;
+        return res;
     }
 }
