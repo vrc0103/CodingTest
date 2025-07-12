@@ -48,9 +48,11 @@ public class Main {
     }
 
     static void rec(int cnt, int prevR, int prevC) {
-        if (cnt > 3) {
+        if (cnt > 3 || cnt >= res) {
             return;
-        } else if (isPos()) {
+        }
+
+        if (isPos()) {
             res = Math.min(res, cnt);
 
             return;
