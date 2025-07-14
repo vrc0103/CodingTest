@@ -52,6 +52,10 @@
 |2851. 슈퍼 마리오|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2851.%E2%80%85%EC%8A%88%ED%8D%BC%E2%80%85%EB%A7%88%EB%A6%AC%EC%98%A4/README.md)|
 |2999. 비밀 이메일|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2999.%E2%80%85%EB%B9%84%EB%B0%80%E2%80%85%EC%9D%B4%EB%A9%94%EC%9D%BC/README.md)|
 |3985. 롤 케이크|[링크](./%EB%B0%B1%EC%A4%80/Bronze/3985.%E2%80%85%EB%A1%A4%E2%80%85%EC%BC%80%EC%9D%B4%ED%81%AC/%EB%A1%A4%E2%80%85%EC%BC%80%EC%9D%B4%ED%81%AC.java)|
+### 🚀 Diamond
+| 문제번호 | 링크 |
+| ----- | ----- |
+|18185. 라면 사기 （Small）|[링크](./%EB%B0%B1%EC%A4%80/Diamond/18185.%E2%80%85%EB%9D%BC%EB%A9%B4%E2%80%85%EC%82%AC%EA%B8%B0%E2%80%85%EF%BC%88Small%EF%BC%89/README.md)|
 ### 🚀 Gold
 | 문제번호 | 링크 |
 | ----- | ----- |
