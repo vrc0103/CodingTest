@@ -8,6 +8,7 @@ public class Main {
     static int res;
     static int row, col;
     static char[][] map;
+    static boolean[] visited;
 
     static int[] dR = {0, 1, 0, -1};
     static int[] dC = {1, 0, -1, 0};
@@ -35,33 +36,26 @@ public class Main {
     }
 
     static void getRes() {
-        List<Character> check = new ArrayList<>();
-        check.add(map[0][0]);
+        visited = new boolean[26];
+        visited[map[0][0] - 'A'] = true; 
 
-        move(0, 0, 1, check);
+        move(0, 0, 1);
     }
 
-    static void move(int nowR, int nowC, int cnt, List<Character> check) {
+    static void move(int nowR, int nowC, int cnt) {
         res = Math.max(res, cnt);
 
         for(int i = 0; i < 4; i++) {
             int nextR = nowR + dR[i];
             int nextC = nowC + dC[i];
 
-            if(nextR < 0 || nextR >= row || nextC < 0 || nextC >= col) {
+            if(nextR < 0 || nextR >= row || nextC < 0 || nextC >= col || visited[map[nextR][nextC] - 'A']) {
                 continue;
             }
 
-            int idx = Collections.binarySearch(check, map[nextR][nextC]);
-
-            if(idx >= 0) {
-                continue;
-            }
-
-            idx = idx * (-1) - 1;
-            check.add(idx, map[nextR][nextC]);
-            move(nextR, nextC, cnt + 1, check);
-            check.remove(idx);
+            visited[map[nextR][nextC] - 'A'] = true;
+            move(nextR, nextC, cnt + 1);
+            visited[map[nextR][nextC] - 'A'] = false;
         }
     }
 }
