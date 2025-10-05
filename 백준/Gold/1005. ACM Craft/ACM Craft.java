@@ -56,47 +56,35 @@ public class Main {
     }
 
     static void getRes() {
-        int res = 0;
-        List<int[]> build = new ArrayList<>();
+        int[] dp = new int[node + 1];
+        ArrayDeque<Integer> q = new ArrayDeque<>();
 
+        // 시작점
         for (int i = 1; i <= node; i++) {
             if (prev[i] == 0) {
-                build.add(new int[] { i, time[i] });
+                dp[i] = time[i];
+                q.add(i);
             }
         }
 
-        while (true) {
-            Collections.sort(build, (o1, o2) -> o1[1] - o2[1]);
+        while (!q.isEmpty()) {
+            int now = q.poll();
 
-            int[] now = build.remove(0);
-            List<Integer> done = new ArrayList<>();
-
-            done.add(now[0]);
-            res += now[1];
-
-            for (int i = 0; i < build.size(); i++) {
-                build.get(i)[1] -= now[1];
-
-                if (build.get(i)[1] == 0) {
-                    done.add(build.remove(i)[0]);
-                    i--;
-                }
-            }
-
-            for (int d : done) {
-                if (d == target) {
-                    sb.append(res).append("\n");
-                    return;
+            for (int next : graph.get(now)) {
+                // 더 큰 값으로 갱신 : 가장 나중에 완성된 건물이 기준이기 때문
+                if (dp[next] < dp[now] + time[next]) {
+                    dp[next] = dp[now] + time[next];
                 }
 
-                for (int next : graph.get(d)) {
-                    prev[next]--;
+                // 위상정렬과 동일하게 이전 작업이 모두 완료되면 queue에 추가
+                prev[next]--;
 
-                    if (prev[next] == 0) {
-                        build.add(new int[] { next, time[next] });
-                    }
+                if (prev[next] == 0) {
+                    q.add(next);
                 }
             }
         }
+
+        sb.append(dp[target]).append('\n');
     }
 }
